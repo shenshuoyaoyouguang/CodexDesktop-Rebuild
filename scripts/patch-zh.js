@@ -8,7 +8,7 @@ const path = require("path");
  */
 
 const rootDir = path.join(__dirname, "..");
-const mainJsPath = path.join(rootDir, "src", ".vite", "build", "main.js");
+const buildDir = path.join(rootDir, "src", ".vite", "build");
 const assetsDir = path.join(rootDir, "src", "webview", "assets");
 
 function findRendererBundle() {
@@ -20,6 +20,18 @@ function findRendererBundle() {
     .map((f) => ({ f, size: fs.statSync(path.join(assetsDir, f)).size }))
     .sort((a, b) => b.size - a.size)[0].f;
   return path.join(assetsDir, pick);
+}
+
+function findMainProcessBundle() {
+  if (!fs.existsSync(buildDir)) return null;
+  const files = fs.readdirSync(buildDir).filter((f) => /^main-[^0-9].*\.js$/.test(f));
+  if (files.length === 0) return null;
+  // 返回最大的文件（通常是主要的编译产物）
+  const pick = files
+    .map((f) => ({ f, size: fs.statSync(path.join(buildDir, f)).size }))
+    .sort((a, b) => b.size - a.size)[0];
+  if (!pick) return null;
+  return path.join(buildDir, pick.f);
 }
 
 function patchRendererI18n() {
@@ -45,11 +57,13 @@ function patchRendererI18n() {
 }
 
 function patchMainMenu() {
-  if (!fs.existsSync(mainJsPath)) {
-    console.warn("⚠️  未找到 main.js");
+  const mainBundlePath = findMainProcessBundle();
+  if (!mainBundlePath) {
+    console.warn("⚠️  未找到主进程编译文件 (main-*.js)");
     return;
   }
-  let content = fs.readFileSync(mainJsPath, "utf-8");
+  console.log(`📄 使用主进程编译文件: ${path.basename(mainBundlePath)}`);
+  let content = fs.readFileSync(mainBundlePath, "utf-8");
   let changed = 0;
 
   const replacements = [
@@ -105,7 +119,7 @@ function patchMainMenu() {
   }
 
   if (changed > 0) {
-    fs.writeFileSync(mainJsPath, content);
+    fs.writeFileSync(mainBundlePath, content);
     console.log(`✅ 主菜单已汉化：替换 ${changed} 处`);
   } else {
     console.log("ℹ️  主菜单似乎已是中文或未命中可替换项");
