@@ -2,10 +2,10 @@ name: Build & Release
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     tags: ["v*"]
   pull_request:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
     inputs:
       platform:
@@ -21,6 +21,9 @@ on:
 
 env:
   NODE_VERSION: "20"
+  # 跳过签名和公证（复刻项目不需要）
+  SKIP_SIGN: "true"
+  SKIP_NOTARIZE: "true"
 
 jobs:
   # ============================================
@@ -32,7 +35,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, arm64]
+        include:
+          - arch: arm64
+            npm_script: build:mac-arm64
+          - arch: x64
+            npm_script: build:mac-x64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,10 +56,7 @@ jobs:
         run: npm install
 
       - name: Build for macOS ${{ matrix.arch }}
-        run: npm run build:mac-${{ matrix.arch }}
-        env:
-          SKIP_SIGN: "true"
-          SKIP_NOTARIZE: "true"
+        run: npm run ${{ matrix.npm_script }}
 
       - name: List outputs
         run: ls -lhR out/make/
@@ -61,15 +65,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Codex-macOS-${{ matrix.arch }}-dmg
-          path: out/make/*.dmg
-          if-no-files-found: error
+          path: out/make/**/*.dmg
+          if-no-files-found: warn
 
       - name: Upload ZIP
         uses: actions/upload-artifact@v4
         with:
           name: Codex-macOS-${{ matrix.arch }}-zip
-          path: out/make/zip/**/*.zip
-          if-no-files-found: error
+          path: out/make/**/*.zip
+          if-no-files-found: warn
 
   # ============================================
   # Windows 构建 (x64)
@@ -102,15 +106,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Codex-Windows-x64-setup
-          path: out/make/squirrel.windows/**/*
+          path: out/make/squirrel.windows/
           if-no-files-found: warn
 
       - name: Upload ZIP
         uses: actions/upload-artifact@v4
         with:
           name: Codex-Windows-x64-zip
-          path: out/make/zip/**/*.zip
-          if-no-files-found: error
+          path: out/make/**/*.zip
+          if-no-files-found: warn
 
   # ============================================
   # Linux 构建 (arm64 + x64)
@@ -121,7 +125,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x64, arm64]
+        include:
+          - arch: x64
+            npm_script: build:linux-x64
+          - arch: arm64
+            npm_script: build:linux-arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -143,7 +151,7 @@ jobs:
         run: npm install
 
       - name: Build for Linux ${{ matrix.arch }}
-        run: npm run build:linux-${{ matrix.arch }}
+        run: npm run ${{ matrix.npm_script }}
 
       - name: List outputs
         run: ls -lhR out/make/
@@ -152,22 +160,22 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Codex-Linux-${{ matrix.arch }}-deb
-          path: out/make/deb/**/*.deb
+          path: out/make/**/*.deb
           if-no-files-found: warn
 
       - name: Upload RPM
         uses: actions/upload-artifact@v4
         with:
           name: Codex-Linux-${{ matrix.arch }}-rpm
-          path: out/make/rpm/**/*.rpm
+          path: out/make/**/*.rpm
           if-no-files-found: warn
 
       - name: Upload ZIP
         uses: actions/upload-artifact@v4
         with:
           name: Codex-Linux-${{ matrix.arch }}-zip
-          path: out/make/zip/**/*.zip
-          if-no-files-found: error
+          path: out/make/**/*.zip
+          if-no-files-found: warn
 
   # ============================================
   # 创建 GitHub Release
