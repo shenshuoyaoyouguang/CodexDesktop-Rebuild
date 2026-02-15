@@ -61,6 +61,41 @@ const MENU_TRANSLATIONS = {
   'label:"Start Trace Recording"': 'label:"开始跟踪录制"',
   'label:"Stop Trace Recording"': 'label:"停止跟踪录制"',
   'label:"Saving Trace…"': 'label:"正在保存跟踪…"',
+  
+  // Electron 原生菜单 (role-based)
+  'label:"View"': 'label:"视图"',
+  'label:"Services"': 'label:"服务"',
+  
+  // 上下文菜单 (electron-context-menu) - 编辑操作
+  'label:"Cu&t"': 'label:"剪切"',
+  'label:"&Copy"': 'label:"复制"',
+  'label:"&Paste"': 'label:"粘贴"',
+  'label:"Select &All"': 'label:"全选"',
+  
+  // 上下文菜单 - 图片操作
+  'label:"Save I&mage"': 'label:"保存图片"',
+  'label:"Sa&ve Image As…"': 'label:"图片另存为…"',
+  'label:"Cop&y Image"': 'label:"复制图片"',
+  'label:"C&opy Image Address"': 'label:"复制图片地址"',
+  
+  // 上下文菜单 - 视频操作
+  'label:"Save Vide&o"': 'label:"保存视频"',
+  'label:"Save Video& As…"': 'label:"视频另存为…"',
+  'label:"Copy Video Ad&dress"': 'label:"复制视频地址"',
+  
+  // 上下文菜单 - 链接操作
+  'label:"Copy Lin&k"': 'label:"复制链接"',
+  'label:"Save Link As…"': 'label:"链接另存为…"',
+  
+  // 上下文菜单 - 其他
+  'label:"I&nspect Element"': 'label:"检查元素"',
+  'label:"&Search with Google"': 'label:"使用 Google 搜索"',
+  'label:"Look Up \"{selection}\""': 'label:"查找 \"{selection}\""',
+  'label:"&Learn Spelling"': 'label:"学习拼写"',
+  'label:"No Guesses Found"': 'label:"未找到猜测"',
+  
+  // macOS 系统菜单角色翻译
+  'role:"services"': 'role:"services",label:"服务"',
 };
 
 // ──────────────────────────────────────────────
