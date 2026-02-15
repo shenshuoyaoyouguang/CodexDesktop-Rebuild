@@ -587,6 +587,79 @@ const MISSING_TRANSLATIONS = {
   "confirm.save": "保存",
   "confirm.discard": "放弃",
   "confirm.dontAskAgain": "不再询问",
+
+  // 顶部菜单栏 - File
+  "menu.file": "文件",
+  "menu.file.newThread": "新建会话",
+  "menu.file.openFolder": "打开文件夹…",
+  "menu.file.settings": "设置…",
+  "menu.file.checkUpdates": "检查更新…",
+  "menu.file.logOut": "注销",
+  "menu.file.quit": "退出",
+
+  // 顶部菜单栏 - Edit
+  "menu.edit": "编辑",
+  "menu.edit.undo": "撤销",
+  "menu.edit.redo": "重做",
+  "menu.edit.cut": "剪切",
+  "menu.edit.copy": "复制",
+  "menu.edit.paste": "粘贴",
+  "menu.edit.selectAll": "全选",
+
+  // 顶部菜单栏 - View
+  "menu.view": "视图",
+  "menu.view.commandMenu": "命令菜单…",
+  "menu.view.toggleSidebar": "切换侧边栏",
+  "menu.view.toggleTerminal": "切换终端",
+  "menu.view.toggleDiffPanel": "切换差异面板",
+  "menu.view.find": "查找",
+  "menu.view.previousThread": "上一个会话",
+  "menu.view.nextThread": "下一个会话",
+  "menu.view.back": "后退",
+  "menu.view.forward": "前进",
+  "menu.view.reload": "重新加载窗口",
+  "menu.view.toggleDevTools": "切换开发者工具",
+  "menu.view.zoomIn": "放大",
+  "menu.view.zoomOut": "缩小",
+  "menu.view.resetZoom": "重置缩放",
+  "menu.view.fullscreen": "切换全屏",
+
+  // 顶部菜单栏 - Window
+  "menu.window": "窗口",
+  "menu.window.minimize": "最小化",
+  "menu.window.zoom": "缩放",
+  "menu.window.bringToFront": "全部置前",
+
+  // 顶部菜单栏 - Help
+  "menu.help": "帮助",
+  "menu.help.documentation": "Codex 文档",
+  "menu.help.automations": "自动化",
+  "menu.help.localEnvironments": "本地环境",
+  "menu.help.worktrees": "工作树",
+  "menu.help.skills": "技能",
+  "menu.help.mcp": "模型上下文协议",
+  "menu.help.troubleshooting": "故障排除",
+  "menu.help.keyboardShortcuts": "键盘快捷键",
+  "menu.help.about": "关于 Codex",
+
+  // 应用菜单 (macOS)
+  "appMenu.about": "关于 Codex",
+  "appMenu.services": "服务",
+  "appMenu.hide": "隐藏",
+  "appMenu.hideOthers": "隐藏其他",
+  "appMenu.unhide": "显示全部",
+  "appMenu.quit": "退出",
+
+  // 应用头部
+  "app.sidebar.hide": "隐藏侧边栏",
+  "app.sidebar.show": "显示侧边栏",
+  "app.sidebar.tooltip": "切换侧边栏",
+  "appHeader.installUpdate": "更新",
+
+  // 跟踪录制
+  "trace.start": "开始跟踪录制",
+  "trace.stop": "停止跟踪录制",
+  "trace.saving": "正在保存跟踪…",
 };
 
 // ──────────────────────────────────────────────
